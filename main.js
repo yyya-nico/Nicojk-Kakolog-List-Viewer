@@ -300,8 +300,9 @@ document.addEventListener('DOMContentLoaded', () => {
       time: new Date(Number(comment.date) * 1000).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit', second: '2-digit'})
     };
     const html =
-    `<li data-thread="${comment.thread}" data-no="${comment.no}" data-user-id="${comment.user_id}" data-raw="${encodeURI(JSON.stringify(comment))}">
+    `<li data-thread="${comment.thread}" data-no="${comment.no}" data-user-id="${comment.user_id}">
       <span class="text">${formatted.text}</span><span class="time">${formatted.time}</span>
+      <script type="application/json" class="raw-data">${JSON.stringify(comment)}</script>
     </li>
     `;
     return html;
@@ -407,7 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const scrollPosition = isSmallWindow() ? li.offsetTop - 2 - 10 : li.offsetTop - (listArea.clientHeight - li.offsetHeight) / 2;
     listArea.scrollTo({top: scrollPosition});
-    const rawMeta = JSON.parse(decodeURI(li.dataset.raw));
+    const rawMeta = JSON.parse((li.querySelector('.raw-data').textContent));
     const dl = document.createElement('dl');
     const descList = {
       thread: 'スレッドID',
