@@ -1,3 +1,5 @@
+import './style.scss'
+
 import {htmlspecialchars} from './utils';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -67,20 +69,20 @@ document.addEventListener('DOMContentLoaded', () => {
           case 'ch':
             const options = jkLoadForm.channelPicker.options;
             return [...options].some(option => option.value === value);
-    
+
           case 'date':
             const dateElem = jkLoadForm._date;
             return value >= dateElem.min && value <= dateElem.max;
-    
+
           case 'timestart':
           case 'timeend':
             return value >= '00:00' && value <= '23:59';
-    
+
           default:
             return false;
         }
       };
-    
+
       if (['ch','date','timestart','timeend'].every(param => paramValidator(param))) {
         jkLoadForm.channelPicker.value = params.get('ch');
         jkLoadForm._date.value = params.get('date');
@@ -288,14 +290,14 @@ document.addEventListener('DOMContentLoaded', () => {
       focusedElem.dispatchEvent(new Event('change', {bubbles: true}));
     });
   });
-  
+
   const makeHTMLFromComment = comment => {
     comment = comment.chat;
     const formatted = {
       text: htmlspecialchars(comment.content).replace(/\n/g, '<br>'),
       time: new Date(Number(comment.date) * 1000).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit', second: '2-digit'})
     };
-    const html = 
+    const html =
     `<li data-thread="${comment.thread}" data-no="${comment.no}" data-user-id="${comment.user_id}" data-raw="${encodeURI(JSON.stringify(comment))}">
       <span class="text">${formatted.text}</span><span class="time">${formatted.time}</span>
     </li>

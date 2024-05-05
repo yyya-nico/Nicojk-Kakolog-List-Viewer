@@ -61,7 +61,7 @@ body {
     scroll-behavior: smooth;
 }
 
-a {
+a:any-link {
     color: #66ccff;
     text-decoration: none;
 
@@ -202,13 +202,13 @@ header {
     word-break: break-all;
     text-overflow: ellipsis;
 
-    a {
+    a:any-link {
         color: inherit;
     }
 }
 
 @function contentAreaHeight($unit) {
-    @return calc(100#{$unit} - var(--header-height));
+    @return calc(#{100 + $unit} - var(--header-height));
 }
 
 .wrap {
@@ -360,7 +360,7 @@ header {
                 &:hover {
                     background-color: #2e93ff;
                 }
-    
+
                 &:active {
                     background-color: #5baaff;
                 }
@@ -397,7 +397,7 @@ header {
                     animation-name: expand;
                     animation-direction: normal;
                     cursor: default;
-    
+
                     &:hover,
                     &:active {
                         background-color: #333333;
