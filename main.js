@@ -3,6 +3,7 @@ import './style.scss'
 import {htmlspecialchars} from './utils';
 
 document.addEventListener('DOMContentLoaded', () => {
+  const listArea = document.querySelector('.list-area');
   const jkLoadForm = document.forms['jk-load'];
   jkLoadForm.channelPicker = jkLoadForm.elements['channel-picker'];
   jkLoadForm.datetimeField = jkLoadForm.querySelector('.datetime-field');
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   jkLoadForm.submitButton = jkLoadForm.elements['submit-button'];
   const commentsList = document.getElementById('comments-list');
   const detailPc = document.querySelector('.detail-pc');
+  const isSmallWindow = () => window.innerWidth < 1024;
 
   const now = new Date();
   // const oneDayAgo = new Date(now);
@@ -403,6 +405,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (detailSp) {
       detailSp.remove();
     }
+    const scrollPosition = isSmallWindow() ? li.offsetTop - 2 - 10 : li.offsetTop - (listArea.clientHeight - li.offsetHeight) / 2;
+    listArea.scrollTo({top: scrollPosition});
     const rawMeta = JSON.parse(decodeURI(li.dataset.raw));
     const dl = document.createElement('dl');
     const descList = {
