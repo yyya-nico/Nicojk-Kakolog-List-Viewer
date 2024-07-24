@@ -225,11 +225,7 @@ header {
     >* {
         width: 100%;
         max-width: 800px;
-        margin: 0 auto;
-
-        +* {
-            margin: 20px auto 0;
-        }
+        margin: 20px auto;
     }
 
     .jk-load-form {
@@ -381,7 +377,9 @@ header {
     }
 
     @media (max-width: 1023px) {
-        padding: 10px;
+        >* {
+            margin: 15px auto;
+        }
         #comments-list {
             >li {
                 &.detail-sp {
