@@ -199,94 +199,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  [
-    jkLoadForm.dateMinus1D,
-    jkLoadForm.dateMinus2D,
-    jkLoadForm.dateMinus5D,
-    jkLoadForm.dateMinus7D,
-    jkLoadForm.dateMinus14D,
-    jkLoadForm.dateMinus1M,
-    jkLoadForm.dateMinus3M,
-    jkLoadForm.dateMinus6M,
-    jkLoadForm.dateMinus1Y,
-    jkLoadForm.dateMinus5Y,
-    jkLoadForm.timePlus1H,
-    jkLoadForm.timePlus2H,
-    jkLoadForm.timePlus6H,
-    jkLoadForm.timePlus12H,
-    jkLoadForm.timePlus1M,
-    jkLoadForm.timePlus2M,
-    jkLoadForm.timePlus5M,
-    jkLoadForm.timePlus10M,
-    jkLoadForm.timePlus30M
-  ].forEach(button => {
-    button.addEventListener('click', e => {
-      const date = focusedElem.valueAsDate;
-      const setDiffDate = num => date.setDate(date.getDate() + num);
-      const setDiffMonth = num => date.setMonth(date.getMonth() + num);
-      const setDiffYear = num => date.setFullYear(date.getFullYear() + num);
-      const setDiffHours = num => date.setHours(date.getHours() + num);
-      const setDiffMinutes = num => date.setMinutes(date.getMinutes() + num);
+  const setDiffDate = (date, num) => date.setDate(date.getDate() + num);
+  const setDiffMonth = (date, num) => date.setMonth(date.getMonth() + num);
+  const setDiffYear = (date, num) => date.setFullYear(date.getFullYear() + num);
+  const setDiffHours = (date, num) => date.setHours(date.getHours() + num);
+  const setDiffMinutes = (date, num) => date.setMinutes(date.getMinutes() + num);
+  const buttons = [
+    {elem: jkLoadForm.dateMinus1D, action: date => setDiffDate(date, -1)},
+    {elem: jkLoadForm.dateMinus2D, action: date => setDiffDate(date, -2)},
+    {elem: jkLoadForm.dateMinus5D, action: date => setDiffDate(date, -5)},
+    {elem: jkLoadForm.dateMinus7D, action: date => setDiffDate(date, -7)},
+    {elem: jkLoadForm.dateMinus14D, action: date => setDiffDate(date, -14)},
 
-      switch (e.target) {
-        case jkLoadForm.dateMinus1D:
-          setDiffDate(-1);
-          break;
-        case jkLoadForm.dateMinus2D:
-          setDiffDate(-2);
-          break;
-        case jkLoadForm.dateMinus5D:
-          setDiffDate(-5);
-          break;
-        case jkLoadForm.dateMinus7D:
-          setDiffDate(-7);
-          break;
-        case jkLoadForm.dateMinus14D:
-          setDiffDate(-14);
-          break;
-        case jkLoadForm.dateMinus1M:
-          setDiffMonth(-1);
-          break;
-        case jkLoadForm.dateMinus3M:
-          setDiffMonth(-3);
-          break;
-        case jkLoadForm.dateMinus6M:
-          setDiffMonth(-6);
-          break;
-        case jkLoadForm.dateMinus1Y:
-          setDiffYear(-1);
-          break;
-        case jkLoadForm.dateMinus5Y:
-          setDiffYear(-5);
-          break;
-        case jkLoadForm.timePlus1H:
-          setDiffHours(1);
-          break;
-        case jkLoadForm.timePlus2H:
-          setDiffHours(2);
-          break;
-        case jkLoadForm.timePlus6H:
-          setDiffHours(6);
-          break;
-        case jkLoadForm.timePlus12H:
-          setDiffHours(12);
-          break;
-        case jkLoadForm.timePlus1M:
-          setDiffMinutes(1);
-          break;
-        case jkLoadForm.timePlus2M:
-          setDiffMinutes(2);
-          break;
-        case jkLoadForm.timePlus5M:
-          setDiffMinutes(5);
-          break;
-        case jkLoadForm.timePlus10M:
-          setDiffMinutes(10);
-          break;
-        case jkLoadForm.timePlus30M:
-          setDiffMinutes(30);
-          break;
-      }
+    {elem: jkLoadForm.dateMinus1M, action: date => setDiffMonth(date, -1)},
+    {elem: jkLoadForm.dateMinus3M, action: date => setDiffMonth(date, -3)},
+    {elem: jkLoadForm.dateMinus6M, action: date => setDiffMonth(date, -6)},
+
+    {elem: jkLoadForm.dateMinus1Y, action: date => setDiffYear(date, -1)},
+    {elem: jkLoadForm.dateMinus5Y, action: date => setDiffYear(date, -5)},
+
+    {elem: jkLoadForm.timePlus1H, action: date => setDiffHours(date, 1)},
+    {elem: jkLoadForm.timePlus2H, action: date => setDiffHours(date, 2)},
+    {elem: jkLoadForm.timePlus6H, action: date => setDiffHours(date, 6)},
+    {elem: jkLoadForm.timePlus12H, action: date => setDiffHours(date, 12)},
+
+    {elem: jkLoadForm.timePlus1M, action: date => setDiffMinutes(date, 1)},
+    {elem: jkLoadForm.timePlus2M, action: date => setDiffMinutes(date, 2)},
+    {elem: jkLoadForm.timePlus5M, action: date => setDiffMinutes(date, 5)},
+    {elem: jkLoadForm.timePlus10M, action: date => setDiffMinutes(date, 10)},
+    {elem: jkLoadForm.timePlus30M, action: date => setDiffMinutes(date, 30)},
+  ];
+
+  buttons.forEach(({elem, action}) => {
+    elem.addEventListener('click', () => {
+      const date = focusedElem.valueAsDate;
+      action(date);
       focusedElem.valueAsDate = date;
       focusedElem.dispatchEvent(new Event('input', {bubbles: true}));
       focusedElem.dispatchEvent(new Event('change', {bubbles: true}));
