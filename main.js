@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
       time: new Date(Number(comment.date) * 1000).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit', second: '2-digit'})
     };
     const html =
-    `<li data-thread="${comment.thread}" data-no="${comment.no}" data-user-id="${comment.user_id}">
+    `<li data-thread="${comment.thread}" data-no="${comment.no}" data-user-id="${comment.user_id}" tabindex="0">
       <span class="text">${formatted.text}</span><span class="time">${formatted.time}</span>
       <script type="application/json" class="raw-data">${JSON.stringify(comment)}</script>
     </li>
@@ -407,7 +407,8 @@ document.addEventListener('DOMContentLoaded', () => {
       detailSp.remove();
     }
     const scrollPosition = isSmallWindow() ? li.offsetTop - 2 - 10 : li.offsetTop - (window.innerHeight - header.offsetHeight - li.offsetHeight) / 2;
-    window.scrollTo({top: scrollPosition});
+    const behavior = e.isTrusted ? 'smooth' : 'instant';
+    window.scrollTo({top: scrollPosition, behavior});
     const rawMeta = JSON.parse((li.querySelector('.raw-data').textContent));
     const dl = document.createElement('dl');
     const descList = {
@@ -494,5 +495,39 @@ document.addEventListener('DOMContentLoaded', () => {
     newDetailSp.insertAdjacentHTML('beforeend', dl2);
     li.insertAdjacentElement('afterend', newDetailSp);
     newSameUsers.forEach(comment => comment.classList.add('same-user'));
+  });
+
+  let focusedLi = null;
+  commentsList.addEventListener('focus', e => {
+    focusedLi = e.target;
+  }, true);
+  commentsList.addEventListener('keydown', e => {
+    console.log(e.key);
+    switch (e.key) {
+      case 'ArrowUp':
+        e.preventDefault();
+        (() => {
+          const next = focusedLi ? (focusedLi.previousElementSibling ?? commentsList.lastElementChild) : commentsList.firstElementChild;
+          next.click();
+          next.focus();
+        })();
+        break;
+      case 'ArrowDown':
+        e.preventDefault();
+        (() => {
+          const next = (focusedLi?.nextElementSibling?.classList.contains('detail-sp') ? focusedLi.nextElementSibling?.nextElementSibling : focusedLi?.nextElementSibling) ?? commentsList.firstElementChild;
+          next.click();
+          next.focus();
+        })();
+        break;
+      case ' ':
+      case 'Enter':
+        if (e.target === document.activeElement) {
+          e.preventDefault();
+          e.target.click();
+          e.target.focus();
+        }
+        break;
+    }
   });
 });
