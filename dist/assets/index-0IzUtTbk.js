@@ -7,7 +7,7 @@
       `}),m.innerHTML=E;const B=[...h.children].filter(u=>u.dataset.userId===l.user_id),H=`<dl>
       <dt>コメント回数</dt>
       <dd>${B.findIndex(u=>u.dataset.thread===l.thread&&u.dataset.no===l.no)+1}回目/全${B.length}回中</dd>
-      ${l.user_id.startsWith("rekari:")&&`<dt>ニコニコ実況(Re:仮)のコメント</dt>
-        <dd>はい</dd>`}
+      ${l.user_id.startsWith("rekari:")?`<dt>ニコニコ実況(Re:仮)のコメント</dt>
+        <dd>はい</dd>`:""}
     </dl>
     `;g.appendChild(m.cloneNode(!0)),g.appendChild(document.createElement("hr")),g.insertAdjacentHTML("beforeend",H);const L=document.createElement("li");L.classList.add("detail-sp"),L.appendChild(m),L.appendChild(document.createElement("hr")),L.insertAdjacentHTML("beforeend",H),n.insertAdjacentElement("afterend",L),B.forEach(u=>u.classList.add("same-user"))});let p=null;h.addEventListener("focus",t=>{p=t.target},!0),h.addEventListener("keydown",t=>{switch(t.key){case"ArrowUp":t.preventDefault(),(()=>{const n=p?p.previousElementSibling??h.lastElementChild:h.firstElementChild;n.click(),n.focus()})();break;case"ArrowDown":t.preventDefault(),(()=>{var i,o;const n=((i=p==null?void 0:p.nextElementSibling)!=null&&i.classList.contains("detail-sp")?(o=p.nextElementSibling)==null?void 0:o.nextElementSibling:p==null?void 0:p.nextElementSibling)??h.firstElementChild;n.click(),n.focus()})();break;case" ":case"Enter":t.target===document.activeElement&&(t.preventDefault(),t.target.click(),t.target.focus());break}})});

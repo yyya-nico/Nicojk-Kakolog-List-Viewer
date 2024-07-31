@@ -431,9 +431,11 @@ document.addEventListener('DOMContentLoaded', () => {
     `<dl>
       <dt>コメント回数</dt>
       <dd>${numberOfCommentsFromSameUser}回目/全${newSameUsers.length}回中</dd>
-      ${rawMeta.user_id.startsWith('rekari:') &&
+      ${rawMeta.user_id.startsWith('rekari:') ?
         `<dt>ニコニコ実況(Re:仮)のコメント</dt>
         <dd>はい</dd>`
+        :
+        ''
       }
     </dl>
     `;
