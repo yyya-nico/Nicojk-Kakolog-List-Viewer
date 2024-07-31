@@ -369,11 +369,11 @@ document.addEventListener('DOMContentLoaded', () => {
       mail: 'コマンド',
       premium: 'プレミアム会員',
       anonymity: '匿名',
-      content: 'コメント'
+      content: 'コメント',
+      nx_jikkyo: 'NX-Jikkyo'
     };
     let html = '';
-    Object.keys(rawMeta).forEach(key => {
-      let value = rawMeta[key];
+    Object.entries(rawMeta).forEach(([key, value]) => {
       switch (key) {
         case 'vpos':
           const baseDate = new Date(Number(value) * 10);
@@ -404,6 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
         case 'premium':
           value === '3' && (value = '(2ch実況板からの転載)');
         case 'anonymity':
+        case 'nx_jikkyo':
           switch (value) {
             case '0':
               value = 'いいえ';
@@ -430,6 +431,10 @@ document.addEventListener('DOMContentLoaded', () => {
     `<dl>
       <dt>コメント回数</dt>
       <dd>${numberOfCommentsFromSameUser}回目/全${newSameUsers.length}回中</dd>
+      ${rawMeta.user_id.startsWith('rekari:') &&
+        `<dt>ニコニコ実況(Re:仮)のコメント</dt>
+        <dd>はい</dd>`
+      }
     </dl>
     `;
     detailPc.appendChild(dl.cloneNode(true));
