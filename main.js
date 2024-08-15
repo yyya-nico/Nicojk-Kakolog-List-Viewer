@@ -353,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (detailSp) {
       detailSp.remove();
     }
-    const scrollPosition = isSmallWindow() ? li.offsetTop - header.offsetHeight - 2 - 10 : li.offsetTop - (window.innerHeight - header.offsetHeight - li.offsetHeight) / 2;
+    const scrollPosition = isSmallWindow() ? li.offsetTop - (header.offsetHeight + 2 + 10) : li.offsetTop - (window.innerHeight - header.offsetHeight - li.offsetHeight) / 2;
     const behavior = e.isTrusted ? 'smooth' : 'instant';
     window.scrollTo({top: scrollPosition, behavior});
     const rawMeta = JSON.parse((li.querySelector('.raw-data').textContent));
