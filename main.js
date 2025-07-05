@@ -1,6 +1,6 @@
 import './style.scss'
 
-import {htmlspecialchars} from './utils';
+import {htmlspecialchars, nl2br} from './utils';
 
 document.addEventListener('DOMContentLoaded', () => {
   const header = document.querySelector('header');
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const makeHTMLFromComment = comment => {
     comment = comment.chat;
     const formatted = {
-      text: htmlspecialchars(comment.content).replace(/\n/g, '<br>'),
+      text: nl2br(htmlspecialchars(comment.content)),
       time: new Date(Number(comment.date) * 1000).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit', second: '2-digit'})
     };
     const html =
